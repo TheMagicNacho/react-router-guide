@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+# React Router Guide
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Partialy Based on O'riely's "Learn React" Chp 11
 
-## Available Scripts
+## Imports
+1. react-router
+2. react-router-dom
+``` npm install react-router react-router-dom```
 
-In the project directory, you can run:
+## Design
+- pages.js
+    - This is a best practice and not required.
+    - Use this file to import all the pages you create.
+    - This way, you only need ot import a single file into the App file.
 
-### `npm start`
+- index.js
+    - Wraps the ```<App />``` in Router tags
+    - The Objects wrapped within the elements prop, will be rendered to this page.
+    - Import all other 'pages' through here
+    ```jsx
+    ReactDOM.render (
+    <React.StrictMode>
+        <Router>
+        <App />
+        </Router>
+    </React.StrictMode>,
+    document.getElementById("root")
+    );
+    ```
+- App.js
+    - Hold all your routes here.
+    ```jsx
+    <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/contact" element={<Contact />} />
+        // the * will forward any unknown domains to a specific page
+        <Route path="*" element={<Whoops404 />} />
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+        // Routes with Params
+        // Place a colon before the object key
+        <Route path='/user' element={<UserLanding />} /> 
+        <Route path='/user/:id' element={<UserProfile />} />
+    </Routes>
+    
+    ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## Keywords
+- ```<Router>``` Wraps the app child in the index.js file
+- ```<Routes>``` Top level JSX tag used to instanciate route links.
+- ```<Route path='' element={} />``` creates the actual route
+    - Think of the Route tag as an if/then statement. If the URL matches the defined path, router will render that specific 'page'.
+- ```useParams()``` Reads the URL for the patttern of /dir/:id
+    - the value after the colon is the key to extract the value.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Parameters
+- Parameters can be thought of a site context. The param is passed through the URL, so long as it matches the same patern.
+- EXAMPLE:
+    - There is a route with ```path=/users/:id```
+    - Then a user types, .../users/123
+    - Page with open with that id will be opened.
 
-### `npm run build`
+    - The named funciton "UserProfile" holds the core parts to acomplish param routing.
+```jsx
+function UserProfile(){
+  // useParams will return an object
+  const params = useParams();
+  // The object stored in params will look like {id: "123"}
+  // If we wanted, we could destructure the object now.
+  console.log(params) 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  return (
+    <h1>
+      {/* 
+      Destructure the key used in route, to render the value.
+      In our example, we named the key 'id' 
+      */}
+      Hello There, { params.id }
+    </h1>
+  )
+}
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+function UserLanding(){
+  return (
+    <>
+      <h1>
+        I don't know you.
+      </h1>
+      <p>
+          Type your name in the url after user. /user/YourName
+      </p>
+    </>
+  )
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+function App() {
+  return (
+     <div>
+      <Routes>
+        // Routes with Params
+        // Place a colon before the object key;
+        <Route path='/user' element={<UserLanding />} /> 
+        <Route path='/user/:id' element={<UserProfile />} />
+      </Routes>
+    </div>
+  )
+}
+```
+    

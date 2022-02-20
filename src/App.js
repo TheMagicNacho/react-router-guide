@@ -27,15 +27,15 @@ function UserProfile(){
 }
 
 function UserLanding(){
- 
   return (
     <>
-    <h1>
-      I don't know you.
-    </h1>
-    <p>
-        Type your name in the url after user. /user/YourName
-      </p></>
+      <h1>
+        I don't know you.
+      </h1>
+      <p>
+          Type your name in the url after user. /user/YourName
+      </p>
+    </>
   )
 }
 
@@ -59,10 +59,6 @@ function App() {
         // Place a colon before the object key
         <Route path='/user' element={<UserLanding />} /> 
         <Route path='/user/:id' element={<UserProfile />} />
-
-        
-        
-        
       </Routes>
     
 

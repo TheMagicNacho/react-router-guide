@@ -1,51 +1,40 @@
+/*
+ * This is an example pages.js
+ * Here, we import the page element and combine for export.
+ * This allows us to import only one file in to Apps.js
+ */
 import React from "react";
-
 import Nav from './nav';
 
+// IMPORT PAGES
+import AboutPage from "./About";
+import EventsPage from './Events';
+import ProductsPage from './Products';
+import HomePage from './Home';
+import ContactPage from './Contact';
+
+// MANAGE PAGES
 export function Home() {
-  return (
-    <div>
-      <h1>[Company Website]</h1>
-        <Nav />
-    </div>
-  );
+  return <HomePage />
 }
 
 export function About() {
-  return (
-    <div>
-      <h1>[About]</h1>
-      <Nav />
-    </div>
-  );
+  return <AboutPage />
 }
 
 export function Events() {
-  return (
-    <div>
-      <h1>[Events]</h1>
-      <Nav />
-    </div>
-  );
+  return <EventsPage />
 }
 
 export function Products() {
-  return (
-    <div>
-      <h1>[Products]</h1>
-      <Nav />
-    </div>
-  );
+  return <ProductsPage />
 }
 
 export function Contact() {
-  return (
-    <div>
-      <h1>[Contact]</h1>
-      <Nav />
-    </div>
-  );
+  return <ContactPage />
 }
+
+
 /*
  * The React Router passes properties to the components it renders. 
  * For instance, we can obtain the current location via a property. 
